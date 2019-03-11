@@ -1,0 +1,36 @@
+enclave {
+    from "sgx_tstdc.edl" import *;
+    include "sgx_tseal.h"
+
+    /* 
+     * uprint - invokes OCALL to display string buffer inside the enclave.
+     *  [in]: copy the string buffer to App outside.
+     *  [string]: specifies 'str' is a NULL terminated buffer.
+     */
+    untrusted {
+        void uprint([in, string] const char *str);
+        void usgx_exit([in, string] const char *func_name, int err);
+        void usgx_exit_error([in, string] const char *error_msg); 
+
+
+        /* Write sealed key to disk */
+        uint32_t save_sdata([in, size=sdata_len] uint8_t *sdata, uint32_t sdata_len);
+
+        /* Read sealed key from dis */
+        uint32_t load_sdata([out, size=sdata_len] uint8_t *sdata, uint32_t sdata_len, [out] uint32_t *sdata_len_out);
+    };
+
+
+    trusted {
+        
+
+        public int trusted_init_EPPL([in, size=key_size] unsigned char* client_key, int key_size, [in, size=iv_size] unsigned char* iv, int iv_size, int mac_size, int cipher_mode, int operation_mode); 
+        public void trusted_clear_EPPL();
+
+        public int trusted_enclave_encode_det_symmetric([out, size=dest_size] uint8_t *dest, size_t dest_size, [in, size=src_size] uint8_t* src, size_t src_size);
+        public int trusted_enclave_decode_det_symmetric([out, size=dest_size] uint8_t *dest, size_t dest_size, [in, size=src_size] uint8_t* src, size_t src_size);
+
+        public int trusted_enclave_encode_auth_rand([out, size=dest_size] uint8_t *dest, size_t dest_size, [in, size=src_size] uint8_t* src, size_t src_size);
+        public int trusted_enclave_decode_auth_rand([out, size=dest_size] uint8_t *dest, size_t dest_size, [in, size=src_size] uint8_t* src, size_t src_size);
+    };
+};

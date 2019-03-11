@@ -1,0 +1,37 @@
+enclave {
+    from "sgx_tstdc.edl" import *;
+    include "sgx_tseal.h"
+
+    /* 
+     * uprint - invokes OCALL to display string buffer inside the enclave.
+     *  [in]: copy the string buffer to App outside.
+     *  [string]: specifies 'str' is a NULL terminated buffer.
+     */
+    untrusted {
+        void uprint([in, string] const char *str);
+        void usgx_exit([in, string] const char *func_name, int err);
+        void usgx_exit_error([in, string] const char *error_msg); 
+
+
+        /* Write sealed key to disk */
+        uint32_t save_sdata([in, size=sdata_len] uint8_t *sdata, uint32_t sdata_len);
+
+        /* Read sealed key from dis */
+        uint32_t load_sdata([out, size=sdata_len] uint8_t *sdata, uint32_t sdata_len, [out] uint32_t *sdata_len_out);
+    };
+
+
+    trusted {
+
+        public int trusted_det_init_EC(size_t cipher_blocksize, size_t compress_blocksize);
+        public int trusted_auth_rand_init_EC(size_t cipher_blocksize, size_t compress_blocksize);    
+        public void trusted_clear_EC();
+
+        public int trusted_det_lzo1x_compress([out, size=dst_size] uint8_t *dst, size_t dst_size, [out] size_t *res_size, [in, size=src_size] uint8_t* src, size_t src_size, [in, size=wrkmem_size] uint8_t *wrkmem, size_t wrkmem_size);
+        public int trusted_det_lzo1x_decompress_safe([out, size=dst_size] uint8_t *dst, size_t dst_size, [in, out] size_t *res_size, [in, size=src_size] uint8_t* src, size_t src_size, [in, size=wrkmem_size] uint8_t *wrkmem, size_t wrkmem_size);
+
+        public int trusted_auth_rand_lzo1x_compress([out, size=dst_size] uint8_t *dst, size_t dst_size, [out] size_t *res_size, [in, size=src_size] uint8_t* src, size_t src_size, [in, size=wrkmem_size] uint8_t *wrkmem, size_t wrkmem_size);
+        public int trusted_auth_rand_lzo1x_decompress_safe([out, size=dst_size] uint8_t *dst, size_t dst_size, [in, out] size_t *res_size, [in, size=src_size] uint8_t* src, size_t src_size, [in, size=wrkmem_size] uint8_t *wrkmem, size_t wrkmem_size);
+
+    };
+};
