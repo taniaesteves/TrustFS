@@ -109,7 +109,8 @@ Once the dependencies are installed, place yourself at the root of the project a
 ```bash
 ./autogen.sh
 ./configure
-./make
+make
+sudo make install
 ```
 The command above should produce a binary named `sfs` that will be used to start the file system.
 

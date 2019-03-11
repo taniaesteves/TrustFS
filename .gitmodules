@@ -1,0 +1,15 @@
+[submodule "inih"]
+	path = inih
+	url = https://github.com/benhoyt/inih/
+[submodule "layers_impl/dedup/impls/ddumbfs_layer"]
+	path = layers_impl/dedup/impls/ddumbfs_layer
+	url = https://github.com/taniaesteves/ddumbfs_layer.git
+[submodule "layers_impl/dedup/impls/lessfs_layer"]
+	path = layers_impl/dedup/impls/lessfs_layer
+	url = https://github.com/taniaesteves/lessfs_layer.git
+[submodule "layers_impl/compression/impls/fusecompress_layer"]
+	path = layers_impl/compression/impls/fusecompress_layer
+	url = https://github.com/taniaesteves/fusecompress_layer.git
+[submodule "layers_impl/remote/impls/fuse-nfs"]
+	path = layers_impl/remote/impls/fuse-nfs
+	url = https://github.com/taniaesteves/fuse-nfs-layer.git
