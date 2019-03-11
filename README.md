@@ -125,8 +125,8 @@ where `/mnt/point` is the mount point for your instance of SafeFS. `conf_example
 ##### 
 For more information please contact:
 
-Tânia Esteves tania.c.araujo at inesctec.pt
+Tânia Esteves: tania.c.araujo at inesctec.pt
 
-Ricardo Macedo ricardo.g.macedo at inesctec.pt
+Ricardo Macedo: ricardo.g.macedo at inesctec.pt
 
-Joao Paulo jtpaulo at inesctec.pt
+João Paulo: jtpaulo at inesctec.pt
